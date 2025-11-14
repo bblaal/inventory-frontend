@@ -4,7 +4,7 @@ import "./../styles/main.css";
 export default function Header({ title }) {
   return (
     <header className="header">
-      <h1>{title}</h1>
+      <h3>{title}</h3>
     </header>
   );
 }
