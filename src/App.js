@@ -1,14 +1,25 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, NavLink } from "react-router-dom";
 import InventoryPage from "./pages/InventoryPage";
 import ToBuyPage from "./pages/ToBuyPage";
+import { LoadingProvider, LoadingContext } from "./context/LoadingContext";
+import GlobalLoader from "./components/GlobalLoader";
+import { loader } from "./api/loaderManager";
 import "./styles/main.css";
 
-export default function App() {
+function AppContent() {
+  const { setLoading } = useContext(LoadingContext);
+
+  // Register loader setter
+  useEffect(() => {
+    loader.register(setLoading);
+  }, [setLoading]);
+
   return (
-    <Router>
+    <>
+      <GlobalLoader />
+
       <div className="app-container">
-        {/* Main Page Content */}
         <div className="page-content">
           <Routes>
             <Route path="/" element={<InventoryPage />} />
@@ -16,31 +27,26 @@ export default function App() {
           </Routes>
         </div>
 
-        {/* Bottom Navigation Bar */}
         <nav className="bottom-nav">
-          {/* <NavLink
-            to="/"
-            end
-            className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
-          >
-            🏠 <span>Home</span>
-          </NavLink> */}
-
-          <NavLink
-            to="/"
-            className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
-          >
+          <NavLink to="/" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
             📦 <span>Inventory</span>
           </NavLink>
 
-          <NavLink
-            to="/tobuy"
-            className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
-          >
+          <NavLink to="/tobuy" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
             🛒 <span>To Buy</span>
           </NavLink>
         </nav>
       </div>
-    </Router>
+    </>
+  );
+}
+
+export default function App() {
+  return (
+    <LoadingProvider>
+      <Router>
+        <AppContent />
+      </Router>
+    </LoadingProvider>
   );
 }

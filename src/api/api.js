@@ -1,5 +1,6 @@
 // src/api/api.js
 import axios from "axios";
+import { loader } from "./loaderManager";
 
 // 🌐 Load API URL from .env
 const API_BASE = process.env.REACT_APP_API_BASE;
@@ -18,16 +19,24 @@ const apiClient = axios.create({
 // 🧭 Request interceptor
 apiClient.interceptors.request.use(
   (config) => {
+    loader.start();  // 🔥 SHOW LOADER
     console.log(`➡️ [${config.method?.toUpperCase()}] ${config.baseURL}${config.url}`);
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => {
+    loader.stop();
+    return Promise.reject(error);
+  }
 );
 
 // 🧩 Response interceptor
 apiClient.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    loader.stop();   // 🔥 HIDE LOADER
+    return response;
+  },
   (error) => {
+    loader.stop();
     console.error("❌ API Error:", error?.response?.data || error.message);
     return Promise.reject(error);
   }
