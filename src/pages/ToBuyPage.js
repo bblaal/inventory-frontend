@@ -6,6 +6,7 @@ import ToBuyItem from "../components/ToBuyItem";
 
 export default function ToBuyPage() {
   const [toBuy, setToBuy] = useState([]);
+  const [showAddForm, setShowAddForm] = useState(false);
 
   const fetchToBuy = async () => {
     const data = await apiService({ url: "/tobuy" });
@@ -19,6 +20,7 @@ export default function ToBuyPage() {
   const handleAdd = async (item) => {
     await apiService({ url: "/tobuy", method: "POST", data: item });
     fetchToBuy();
+    setShowAddForm(false); // close popup on add
   };
 
   const handleToggle = async (id) => {
@@ -35,9 +37,7 @@ export default function ToBuyPage() {
     <div style={styles.container}>
       <Header title="🛒 To Buy List" />
 
-      <div style={styles.formWrapper}>
-        <AddItemForm onAdd={handleAdd} placeholder="Add item to buy..." />
-      </div>
+      {/* Removed old AddItemForm from the top */}
 
       {toBuy.length === 0 ? (
         <p style={styles.noData}>No items added.</p>
@@ -53,6 +53,25 @@ export default function ToBuyPage() {
           ))}
         </div>
       )}
+
+      {/* Floating Add Button */}
+      <button
+        style={{
+          ...styles.fab,
+          bottom: showAddForm ? 320 : 80, // same as inventory
+        }}
+        onClick={() => setShowAddForm((prev) => !prev)}
+      >
+        {showAddForm ? "✖" : "＋"}
+      </button>
+
+      {/* Popup Add Form */}
+      {showAddForm && (
+        <div style={styles.addFormContainer}>
+          <h4 style={{ textAlign: "center", marginBottom: 5 }}>🛒 Add Item</h4>
+          <AddItemForm onAdd={handleAdd} placeholder="Enter item name..." />
+        </div>
+      )}
     </div>
   );
 }
@@ -62,18 +81,44 @@ const styles = {
     backgroundColor: "#f9fafb",
     minHeight: "100vh",
     paddingBottom: "60px",
-    overflowX: "hidden", // ← FIX
+    overflowX: "hidden",
   },
-  formWrapper: {
-    margin: "12px 4%",
-  },
+
   listWrapper: {
     padding: "0 4%",
     marginTop: 10,
   },
+
   noData: {
     textAlign: "center",
     marginTop: 20,
     color: "#888",
+  },
+
+  fab: {
+    position: "fixed",
+    right: 20,
+    width: 55,
+    height: 55,
+    borderRadius: "50%",
+    backgroundColor: "#007AFF",
+    color: "white",
+    fontSize: 30,
+    border: "none",
+    boxShadow: "0 2px 10px rgba(0,0,0,0.7)",
+    cursor: "pointer",
+    zIndex: 20,
+  },
+
+  addFormContainer: {
+    position: "fixed",
+    bottom: 80,
+    left: "5%",
+    width: "90%",
+    backgroundColor: "white",
+    borderRadius: 12,
+    boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+    padding: 12,
+    zIndex: 10,
   },
 };

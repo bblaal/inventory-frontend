@@ -134,10 +134,10 @@ export default function InventoryPage() {
               {f === "all"
                 ? "All"
                 : f === "no"
-                ? "No Stock"
-                : f === "low"
-                ? "Low Stock"
-                : "Healthy"}
+                  ? "No Stock"
+                  : f === "low"
+                    ? "Low Stock"
+                    : "Healthy"}
             </button>
           );
         })}
@@ -184,15 +184,15 @@ export default function InventoryPage() {
                         item.status === "no"
                           ? "#ff3b30"
                           : item.status === "low"
-                          ? "#ffcc00ff"
-                          : "#34c759",
+                            ? "#ffcc00ff"
+                            : "#34c759",
                     }}
                   >
                     {item.status === "no"
                       ? "No"
                       : item.status === "low"
-                      ? "Low"
-                      : "OK"}
+                        ? "Low"
+                        : "OK"}
                   </span>
                 </div>
               </div>
@@ -202,9 +202,16 @@ export default function InventoryPage() {
       )}
 
       {/* Floating Add Button */}
-      <button style={styles.fab} onClick={() => setShowAddForm((prev) => !prev)}>
+      <button
+        style={{
+          ...styles.fab,
+          bottom: showAddForm ? 320 : 80, // ⬅ change bottom based on state
+        }}
+        onClick={() => setShowAddForm((prev) => !prev)}
+      >
         {showAddForm ? "✖" : "＋"}
       </button>
+
 
       {showAddForm && (
         <div style={styles.addFormContainer}>
@@ -336,7 +343,6 @@ const styles = {
 
   fab: {
     position: "fixed",
-    bottom: 80,
     right: 20,
     width: 55,
     height: 55,
