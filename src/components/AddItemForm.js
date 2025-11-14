@@ -14,13 +14,14 @@ export default function AddItemForm({ onAdd, placeholder = "Item name..." }) {
   };
 
   return (
-    <form className="add-form" onSubmit={handleSubmit}>
+    <form className="add-form add-form-vertical" onSubmit={handleSubmit}>
       <input
         type="text"
         value={name}
         placeholder={placeholder}
         onChange={(e) => setName(e.target.value)}
       />
+
       <input
         type="number"
         step="0.01"
@@ -28,7 +29,8 @@ export default function AddItemForm({ onAdd, placeholder = "Item name..." }) {
         placeholder="Qty"
         onChange={(e) => setQuantity(e.target.value)}
       />
-      <button type="submit">＋</button>
+
+      <button type="submit">＋ Add</button>
     </form>
   );
 }

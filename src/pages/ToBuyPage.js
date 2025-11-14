@@ -34,14 +34,15 @@ export default function ToBuyPage() {
   return (
     <div style={styles.container}>
       <Header title="🛒 To Buy List" />
-      <div style={styles.addFormWrapper}>
+
+      <div style={styles.formWrapper}>
         <AddItemForm onAdd={handleAdd} placeholder="Add item to buy..." />
       </div>
 
       {toBuy.length === 0 ? (
         <p style={styles.noData}>No items added.</p>
       ) : (
-        <div style={styles.list}>
+        <div style={styles.listWrapper}>
           {toBuy.map((item) => (
             <ToBuyItem
               key={item.id}
@@ -60,19 +61,19 @@ const styles = {
   container: {
     backgroundColor: "#f9fafb",
     minHeight: "100vh",
-    paddingBottom: 50,
-    fontFamily: "Arial, sans-serif",
+    paddingBottom: "60px",
+    overflowX: "hidden", // ← FIX
   },
-  addFormWrapper: {
-    margin: "10px 5%",
+  formWrapper: {
+    margin: "12px 4%",
   },
-  list: {
-    padding: "0 5%",
+  listWrapper: {
+    padding: "0 4%",
     marginTop: 10,
   },
   noData: {
     textAlign: "center",
     marginTop: 20,
-    color: "#999",
+    color: "#888",
   },
 };
