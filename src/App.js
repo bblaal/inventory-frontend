@@ -5,6 +5,8 @@ import ToBuyPage from "./pages/ToBuyPage";
 import { LoadingProvider, LoadingContext } from "./context/LoadingContext";
 import GlobalLoader from "./components/GlobalLoader";
 import { loader } from "./api/loaderManager";
+import { FaShoppingCart } from "react-icons/fa";
+import { MdInventory } from "react-icons/md";
 import "./styles/main.css";
 
 function AppContent() {
@@ -28,12 +30,13 @@ function AppContent() {
         </div>
 
         <nav className="bottom-nav">
-          <NavLink to="/inventory" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
-            📦 <span>Inventory</span>
-          </NavLink>
-
           <NavLink to="/" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
-            🛒 <span>To Buy</span>
+            <FaShoppingCart size={28}/>
+            <span>To Buy</span>
+          </NavLink>
+          <NavLink to="/inventory" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
+            <MdInventory size={28}/>
+            <span>Inventory</span>
           </NavLink>
         </nav>
       </div>

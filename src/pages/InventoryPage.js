@@ -3,6 +3,12 @@ import { FaRedo } from "react-icons/fa";
 import apiService from "../api/api";
 import Header from "../components/Header";
 import AddItemForm from "../components/AddItemForm";
+import { ImCross } from "react-icons/im";
+import { FaCheck } from "react-icons/fa6";
+import { GoAlertFill } from "react-icons/go";
+import { FaRegCalendarCheck } from "react-icons/fa6";
+import { FaPlus } from "react-icons/fa";
+import { GiTimeTrap } from "react-icons/gi";
 
 export default function InventoryPage() {
   const [inventory, setInventory] = useState([]);
@@ -102,13 +108,16 @@ export default function InventoryPage() {
       {/* Stats summary */}
       <div style={styles.statsContainer}>
         <div style={{ ...styles.statCard, borderColor: "#ff3b30" }}>
-          ❌ {count.no} No Stock
+          <ImCross color="#ff3b30" />
+          {count.no} No Stock
         </div>
         <div style={{ ...styles.statCard, borderColor: "#ffcc00" }}>
-          ⚠️ {count.low} Low Stock
+          <GoAlertFill color="#ffcc00" />
+          {count.low} Low Stock
         </div>
         <div style={{ ...styles.statCard, borderColor: "#34c759" }}>
-          ✅ {count.ok} Healthy
+          <FaCheck color="34c759" />
+          {count.ok} Healthy
         </div>
       </div>
 
@@ -166,16 +175,18 @@ export default function InventoryPage() {
                   <span style={styles.itemName}>{item.name}</span>
                   <span style={styles.itemMeta}>Qty: {item.quantity}</span>
                   <span style={styles.itemMeta}>
-                    🗓 {new Date(item.purchase_date).toLocaleDateString()}
+                    <FaRegCalendarCheck />
+                    {new Date(item.purchase_date).toLocaleDateString()}
                   </span>
-                  <span style={styles.itemMeta}>⏳ {item.expected_duration_days}d</span>
+                  <span style={styles.itemMeta}><GiTimeTrap />
+                    {item.expected_duration_days}d</span>
                 </div>
                 <div style={styles.right}>
                   <button
                     style={styles.restockButton}
                     onClick={() => handleRestock(item)}
                   >
-                    <FaRedo /> Restock
+                    <FaRedo />
                   </button>
                   <span
                     style={{
@@ -205,11 +216,13 @@ export default function InventoryPage() {
       <button
         style={{
           ...styles.fab,
-          bottom: showAddForm ? 320 : 80, // ⬅ change bottom based on state
+          bottom: showAddForm ? 320 : 80, // same as inventory
         }}
         onClick={() => setShowAddForm((prev) => !prev)}
       >
-        {showAddForm ? "✖" : "＋"}
+        {showAddForm ? <ImCross size={22} />
+          : <FaPlus size={22} />
+        }
       </button>
 
 

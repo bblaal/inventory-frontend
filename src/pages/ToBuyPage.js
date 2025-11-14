@@ -3,6 +3,8 @@ import apiService from "../api/api";
 import Header from "../components/Header";
 import AddItemForm from "../components/AddItemForm";
 import ToBuyItem from "../components/ToBuyItem";
+import { FaPlus } from "react-icons/fa";
+import { ImCross } from "react-icons/im";
 
 export default function ToBuyPage() {
   const [toBuy, setToBuy] = useState([]);
@@ -62,7 +64,9 @@ export default function ToBuyPage() {
         }}
         onClick={() => setShowAddForm((prev) => !prev)}
       >
-        {showAddForm ? "✖" : "＋"}
+        {showAddForm ? <ImCross size={22} />
+          : <FaPlus size={22} />
+        }
       </button>
 
       {/* Popup Add Form */}
@@ -108,6 +112,7 @@ const styles = {
     boxShadow: "0 2px 10px rgba(0,0,0,0.7)",
     cursor: "pointer",
     zIndex: 20,
+    textAlign: "center",
   },
 
   addFormContainer: {

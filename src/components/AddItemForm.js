@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./../styles/main.css";
+import { FaPlus } from "react-icons/fa";
 
 export default function AddItemForm({ onAdd, placeholder = "Item name..." }) {
   const [name, setName] = useState("");
@@ -30,7 +31,8 @@ export default function AddItemForm({ onAdd, placeholder = "Item name..." }) {
         onChange={(e) => setQuantity(e.target.value)}
       />
 
-      <button type="submit">＋ Add</button>
+      <button type="submit"><FaPlus />
+        Add</button>
     </form>
   );
 }

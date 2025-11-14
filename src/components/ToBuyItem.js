@@ -1,5 +1,8 @@
 import React from "react";
 import "./../styles/main.css";
+import { FaShoppingCart } from "react-icons/fa";
+import { ImCross } from "react-icons/im";
+import { FaCheck } from "react-icons/fa";
 
 export default function ToBuyItem({ item, onToggle, onDelete }) {
   return (
@@ -13,10 +16,12 @@ export default function ToBuyItem({ item, onToggle, onDelete }) {
           className={`toggle-btn ${item.bought ? "done" : ""}`}
           onClick={() => onToggle(item.id)}
         >
-          {item.bought ? "✔" : "🛒"}
+          {item.bought ? <FaCheck size={20} />
+            : <FaShoppingCart size={20} />}
         </button>
         <button className="delete-btn" onClick={() => onDelete(item.id)}>
-          ✕
+          <ImCross size={20} />
+
         </button>
       </div>
     </div>
